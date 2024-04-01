@@ -1,0 +1,18 @@
+server:
+  port: 8080
+spring:
+  banner:
+    location: fay.txt
+  datasource:
+    url: jdbc:mysql://localhost:3306/big_event?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: WANGXINYU1119
+mybatis:
+  # 配置xml的mapper的映射
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  configuration:
+    # mybatis输出到控制台
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 驼峰命名的开关 td_user  --> tdUser
+    map-underscore-to-camel-case: true

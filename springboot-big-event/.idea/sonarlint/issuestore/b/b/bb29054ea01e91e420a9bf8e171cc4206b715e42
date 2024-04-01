@@ -1,0 +1,13 @@
+
+z
+java:S11499"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(Í“‚—ÿÿÿÿÿ
+z
+java:S1149A"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(ã‘Şûÿÿÿÿ
+P
+java:S1118":Add a private constructor to hide the implicit public one.(Òšıš
+@
+java:S1197"*Move the array designators [] to the type.(¤î¹
+E
+java:S11974"*Move the array designators [] to the type.(¥Íº´ûÿÿÿÿ
+@
+java:S11978"*Move the array designators [] to the type.(àáù•
