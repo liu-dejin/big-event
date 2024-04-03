@@ -3,6 +3,8 @@ package org.bigevent.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.bigevent.model.Article;
 
+import java.util.List;
+
 /**
 * @author ZH280
 * @description 针对表【article】的数据库操作Mapper
@@ -24,4 +26,5 @@ public interface ArticleMapper {
 
     int updateByPrimaryKey(Article record);
 
+    List<Article> selectArticleList(Integer userId, String categoryId, String state);
 }

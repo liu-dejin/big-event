@@ -5,12 +5,12 @@
 <mapper namespace="org.bigevent.mapper.CategoryMapper">
 
     <resultMap id="BaseResultMap" type="org.bigevent.model.Category">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="categoryName" column="category_name" jdbcType="VARCHAR"/>
-            <result property="categoryAlias" column="category_alias" jdbcType="VARCHAR"/>
-            <result property="createUser" column="create_user" jdbcType="INTEGER"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="categoryName" column="category_name" jdbcType="VARCHAR"/>
+        <result property="categoryAlias" column="category_alias" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -20,72 +20,77 @@
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from category
-        where  id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectCategoryList" resultType="org.bigevent.model.Category">
+        select
+        <include refid="Base_Column_List"/>
+        from category where create_user = #{userId}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from category
-        where  id = #{id,jdbcType=INTEGER}
+        delete
+        from category
+        where id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.bigevent.model.Category" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.bigevent.model.Category"
+            useGeneratedKeys="true">
         insert into category
-        ( id,category_name,category_alias
-        ,create_user,create_time,update_time
-        )
-        values (#{id,jdbcType=INTEGER},#{categoryName,jdbcType=VARCHAR},#{categoryAlias,jdbcType=VARCHAR}
-        ,#{createUser,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP}
-        )
+        ( id, category_name, category_alias
+        , create_user, create_time, update_time)
+        values ( #{id,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, #{categoryAlias,jdbcType=VARCHAR}
+               , #{createUser,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.bigevent.model.Category" useGeneratedKeys="true">
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.bigevent.model.Category"
+            useGeneratedKeys="true">
         insert into category
         <trim prefix="(" suffix=")" suffixOverrides=",">
-                <if test="id != null">id,</if>
-                <if test="categoryName != null">category_name,</if>
-                <if test="categoryAlias != null">category_alias,</if>
-                <if test="createUser != null">create_user,</if>
-                <if test="createTime != null">create_time,</if>
-                <if test="updateTime != null">update_time,</if>
+            <if test="id != null">id,</if>
+            <if test="categoryName != null">category_name,</if>
+            <if test="categoryAlias != null">category_alias,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-                <if test="id != null">#{id,jdbcType=INTEGER},</if>
-                <if test="categoryName != null">#{categoryName,jdbcType=VARCHAR},</if>
-                <if test="categoryAlias != null">#{categoryAlias,jdbcType=VARCHAR},</if>
-                <if test="createUser != null">#{createUser,jdbcType=INTEGER},</if>
-                <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
-                <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
+            <if test="id != null">#{id,jdbcType=INTEGER},</if>
+            <if test="categoryName != null">#{categoryName,jdbcType=VARCHAR},</if>
+            <if test="categoryAlias != null">#{categoryAlias,jdbcType=VARCHAR},</if>
+            <if test="createUser != null">#{createUser,jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+            <if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="org.bigevent.model.Category">
         update category
         <set>
-                <if test="categoryName != null">
-                    category_name = #{categoryName,jdbcType=VARCHAR},
-                </if>
-                <if test="categoryAlias != null">
-                    category_alias = #{categoryAlias,jdbcType=VARCHAR},
-                </if>
-                <if test="createUser != null">
-                    create_user = #{createUser,jdbcType=INTEGER},
-                </if>
-                <if test="createTime != null">
-                    create_time = #{createTime,jdbcType=TIMESTAMP},
-                </if>
-                <if test="updateTime != null">
-                    update_time = #{updateTime,jdbcType=TIMESTAMP},
-                </if>
+            <if test="categoryName != null">
+                category_name = #{categoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryAlias != null">
+                category_alias = #{categoryAlias,jdbcType=VARCHAR},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
         </set>
-        where   id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="org.bigevent.model.Category">
         update category
-        set
-            category_name =  #{categoryName,jdbcType=VARCHAR},
-            category_alias =  #{categoryAlias,jdbcType=VARCHAR},
-            create_user =  #{createUser,jdbcType=INTEGER},
-            create_time =  #{createTime,jdbcType=TIMESTAMP},
-            update_time =  #{updateTime,jdbcType=TIMESTAMP}
-        where   id = #{id,jdbcType=INTEGER}
+        set category_name  = #{categoryName,jdbcType=VARCHAR},
+            category_alias = #{categoryAlias,jdbcType=VARCHAR},
+            create_user    = #{createUser,jdbcType=INTEGER},
+            create_time    = #{createTime,jdbcType=TIMESTAMP},
+            update_time    = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>
