@@ -44,4 +44,8 @@ public class FileUploadController {
         String url = AliOssUtils.uploadFile(filename, file.getInputStream());
         return Result.success(url);
     }
+
+//    public Result test(){
+//        return Result.success();
+//    }
 }

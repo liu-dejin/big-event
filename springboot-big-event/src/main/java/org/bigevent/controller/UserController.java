@@ -10,12 +10,15 @@ import org.bigevent.utils.Result;
 import org.bigevent.utils.ThreadLocalUtil;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
@@ -25,6 +28,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     /**
      * 用户注册
@@ -61,8 +67,25 @@ public class UserController {
         map.put("userId", user.getId());
         map.put("username", user.getUsername());
         String token = JwtUtil.genToken(map);
+        // 将token存入redis
+        ValueOperations<String, String> stringStringValueOperations = stringRedisTemplate.opsForValue();
+        stringStringValueOperations.set(token, token, 1, TimeUnit.HOURS);
 
         return Result.success("登录成功", token);
+    }
+
+    /**
+     * 用户退出登录
+     *
+     * @param token
+     * @return
+     */
+    @PostMapping("/logout")
+    public Result logout(@RequestHeader(name = "Authorization") String token) {
+        // 删除redis中的token
+        ValueOperations<String, String> stringStringValueOperations = stringRedisTemplate.opsForValue();
+        stringStringValueOperations.getOperations().delete(token);
+        return Result.success("退出成功");
     }
 
     /**
@@ -72,7 +95,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/userInfo")
-    public Result userInfo(@RequestHeader(name = "Authorization") String token) {
+    public Result userInfo() {
         Map<String, Object> map = ThreadLocalUtil.get();
         String username = (String) map.get("username");
         User user = userService.selectUserName(username);
@@ -107,20 +130,26 @@ public class UserController {
 
     /**
      * 更新用户密码
+     *
      * @param params
      * @return
      */
     @PatchMapping("/updatePwd")
-    public Result updatePwd(@RequestBody Map<String, String> params) {
+    public Result updatePwd(@RequestBody Map<String, String> params,
+                            @RequestHeader("Authorization") String token) {
         if (!StringUtils.hasLength(params.get("old_pwd")) || !StringUtils.hasLength(params.get("new_pwd")) || !StringUtils.hasLength(params.get("re_pwd")))
             return Result.error("缺少必要参数");
         Map<String, Object> map = ThreadLocalUtil.get();
         String username = (String) map.get("username");
         User user = userService.selectUserName(username);
         if (!Md5Util.getMD5String(params.get("old_pwd")).equals(user.getPassword())) return Result.error("原密码错误");
-        if (Md5Util.getMD5String(params.get("old_pwd")).equals(user.getPassword())) return Result.error("新旧密码不能相同");
+        if (Md5Util.getMD5String(params.get("old_pwd")).equals(user.getPassword()))
+            return Result.error("新旧密码不能相同");
         if (!params.get("new_pwd").equals(params.get("re_pwd"))) return Result.error("两次输入密码不一致");
         userService.updatePwd(params.get("new_pwd"));
+        // 删除redis中的token
+        ValueOperations<String, String> stringStringValueOperations = stringRedisTemplate.opsForValue();
+        stringStringValueOperations.getOperations().delete(token);
         return Result.success();
     }
 }

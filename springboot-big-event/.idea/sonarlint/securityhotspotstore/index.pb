@@ -49,8 +49,6 @@ f
 6src/main/java/org/bigevent/service/ArticleService.java,c\2\c205e5379327e4e8909ab359b155cabc16042959
 o
 ?src/main/java/org/bigevent/service/impl/ArticleServiceImpl.java,b\9\b913a6554c6fd5206433f450029b9bdbedb1a4f0
-^
-.src/main/java/org/bigevent/anno/Validated.java,4\3\435eddf4604fac54d0c2f7902acafd2179a9ee42
 Z
 *src/main/java/org/bigevent/anno/State.java,3\d\3d3736c48ad4addaf8cf04a063db331d27f02f3c
 h
@@ -59,7 +57,5 @@ h
 .src/main/java/org/bigevent/model/PageBean.java,5\f\5f877670c15efb790f176e310b768c3465d3f3cc
 o
 ?src/main/java/org/bigevent/controller/FileUploadController.java,e\0\e039e36d12021597aa7fdeb8015243e3592ebc76
-_
-/src/main/java/org/bigevent/controller/Demo.java,e\1\e13c60ee0cfbf1b058374cf7806909340a047149
 a
 1src/main/java/org/bigevent/utils/AliOssUtils.java,6\c\6c6f417d3bad4c564497f092d2d976cbacaf6450

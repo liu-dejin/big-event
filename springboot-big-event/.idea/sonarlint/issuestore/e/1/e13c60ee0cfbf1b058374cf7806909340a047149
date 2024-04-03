@@ -1,11 +1,0 @@
-
-N
-java:S1481!",Remove this unused "content" local variable.(‡˜Òðûÿÿÿÿ8€¦µŸê1
-H
-java:S1481-"+Remove this unused "result" local variable.(ð”Ìæ8ƒ¦µŸê1
-L
-java:S2093"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ8„¦µŸê1
-Y
-java:S1128"7Remove this unused import 'com.aliyun.oss.common.auth'.(ïÑùëýÿÿÿÿ8„¦µŸê1
-[
-java:S1128"9Remove this unused import 'java.io.ByteArrayInputStream'.(Ëôæ±ûÿÿÿÿ8„¦µŸê1
