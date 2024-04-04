@@ -143,7 +143,7 @@ public class UserController {
         String username = (String) map.get("username");
         User user = userService.selectUserName(username);
         if (!Md5Util.getMD5String(params.get("old_pwd")).equals(user.getPassword())) return Result.error("原密码错误");
-        if (Md5Util.getMD5String(params.get("old_pwd")).equals(user.getPassword()))
+        if (Md5Util.getMD5String(params.get("new_pwd")).equals(user.getPassword()))
             return Result.error("新旧密码不能相同");
         if (!params.get("new_pwd").equals(params.get("re_pwd"))) return Result.error("两次输入密码不一致");
         userService.updatePwd(params.get("new_pwd"));
