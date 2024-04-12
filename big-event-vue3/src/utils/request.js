@@ -36,7 +36,7 @@ instance.interceptors.response.use(
     },
     err => {
         //如果响应状态码时401，代表未登录，给出对应的提示，并跳转到登录页
-        if (err.response.status === 401) {
+        if (err?.response?.status === 401) {
             ElMessage.error('请先登录！')
             return router.push('/login')
         }
